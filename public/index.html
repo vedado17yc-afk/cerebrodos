@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0d12">
+<title>Cerebro</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="aurora a1"></div><div class="aurora a2"></div>
+
+<div id="login" class="gate">
+  <div class="gate-card">
+    <div class="orb mini"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div>
+    <h1>Cerebro</h1><p>Tu archivo creativo personal.</p>
+    <input id="password" type="password" placeholder="Contraseña">
+    <button id="loginBtn" class="primary">Entrar</button>
+    <span id="loginMsg"></span>
+  </div>
+</div>
+
+<div id="onboarding" class="gate hidden">
+  <div class="gate-card wide">
+    <div class="eyebrow">PRIMERA CONFIGURACIÓN</div>
+    <h1>Quiero conocerte.</h1>
+    <p>Así podré organizarte el trabajo y hablarte como tú quieras.</p>
+    <div class="form-grid">
+      <label>Tu nombre<input id="obName"></label>
+      <label>¿Cómo quieres que te llame?<input id="obCall"></label>
+      <label>¿Cómo quieres llamarme?<input id="obBrain" value="Cerebro"></label>
+      <label>Personalidad<select id="obPersonality"><option value="creativo">Creativo, directo y resolutivo</option><option value="calido">Cercano y paciente</option><option value="tecnico">Preciso y técnico</option><option value="ironico">Ingenioso, natural y con humor</option></select></label>
+      <label class="full">Cómo quieres que responda<textarea id="obStyle" placeholder="Ej. breve, visual, sin rodeos; explica con iconos cuando ayude."></textarea></label>
+    </div>
+    <button id="saveOnboarding" class="primary">Crear mi Cerebro</button>
+  </div>
+</div>
+
+<div id="app" class="app hidden">
+  <aside class="rail">
+    <div class="brandmark">C</div>
+    <nav>
+      <button data-view="home" class="active" title="Inicio">⌂</button>
+      <button data-view="files" title="Archivos">▦</button><button data-view="drive" title="Google Drive">☁</button>
+      <button data-view="memory" title="Memoria">✦</button>
+      <button data-view="search" title="Buscar">⌕</button>
+      <button data-view="trash" title="Papelera">⌫</button>
+      <button data-view="activity" title="Actividad">◷</button><button data-view="settings" title="Ajustes">⚙</button>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">CEREBRO · CREATIVE VAULT</div>
+        <h2 id="hello">Hola.</h2>
+      </div>
+      <div class="top-actions"><button id="accountChip" class="account-chip" title="Perfil"><span id="avatarLetter">U</span><b id="accountName">Usuario</b></button><div class="status"><span></span><b id="statusText">Listo</b></div></div>
+    </header>
+
+    <section class="hero">
+      <div class="orb-wrap">
+        <div id="orb" class="orb">
+          <div class="eye l"></div><div class="eye r"></div><div class="mouth"></div>
+          <div id="orbIcon" class="orb-icon">✦</div>
+        </div>
+      </div>
+      <div class="hero-copy">
+        <div class="eyebrow">ASISTENTE VISUAL</div>
+        <h1 id="brainName">Cerebro</h1>
+        <p id="speech">Tu espacio creativo, organizado contigo.</p>
+        <div class="commandbar">
+          <span class="command-spark">✦</span>
+          <input id="commandInput" placeholder="Pídeme: “crea una carpeta Referencias”, “busca Adela”, “guarda idea…”">
+          <button id="commandBtn">Hacer</button>
+        </div>
+        <div class="talkbar">
+          <input id="speakText" placeholder="Escribe algo para que lo diga…">
+          <button id="speakBtn">Hablar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-home" class="view">
+      <div class="grid">
+        <article class="panel wide-card">
+          <div class="panel-head"><div><div class="eyebrow">ACCESO RÁPIDO</div><h3>¿Qué quieres hacer?</h3></div></div>
+          <div class="action-grid">
+            <button onclick="switchView('files');faceState('folder')"><span>▦</span><b>Organizar archivos</b><small>Crear carpetas, mover, renombrar y guardar.</small></button>
+            <button onclick="switchView('search');faceState('search')"><span>⌕</span><b>Buscar</b><small>Encuentra proyectos, imágenes, notas y referencias.</small></button>
+            <button onclick="switchView('memory');faceState('memory')"><span>✦</span><b>Guardar una idea</b><small>Citas, ideas, notas y referencias.</small></button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-files" class="view hidden">
+      <div class="files-shell">
+        <div class="toolbar glass">
+          <button id="upBtn">← Atrás</button>
+          <div id="crumb" class="crumb">Archivo</div>
+          <button id="newFolderBtn">＋ Carpeta</button><button id="newProjectBtn">✦ Proyecto</button>
+          <label class="upload-btn">↑ Subir<input id="uploadInput" type="file" multiple hidden></label>
+          <button id="refreshBtn">↻</button>
+        </div>
+        <div id="dropzone" class="dropzone">Suelta aquí archivos o carpetas de trabajo</div>
+        <div id="fileGrid" class="file-grid"></div>
+      </div>
+    </section>
+
+    <section id="view-drive" class="view hidden">
+      <div class="files-shell">
+        <div class="toolbar glass">
+          <button id="driveBackBtn">← Atrás</button>
+          <div id="driveCrumb" class="crumb">Google Drive · CEREBRO</div>
+          <button id="driveConnectBtn">Conectar Drive</button>
+          <button id="driveNewFolderBtn">＋ Carpeta</button>
+          <label class="upload-btn">↑ Subir<input id="driveUploadInput" type="file" multiple hidden></label>
+          <button id="driveRefreshBtn">↻</button>
+        </div>
+        <div id="driveStatusCard" class="cloud-status"></div>
+        <div id="driveDropzone" class="dropzone">Suelta aquí los archivos que quieras guardar en tu nube CEREBRO</div>
+        <div id="driveGrid" class="file-grid"></div>
+      </div>
+    </section>
+
+    <section id="view-memory" class="view hidden">
+      <div class="grid two">
+        <article class="panel">
+          <div class="eyebrow">NUEVO RECUERDO</div><h3>Guárdalo para mí.</h3>
+          <select id="memType"><option value="idea">Idea</option><option value="cita">Cita</option><option value="nota">Nota</option><option value="referencia">Referencia</option></select>
+          <textarea id="memText" placeholder="Escribe aquí…"></textarea>
+          <input id="memTags" placeholder="Etiquetas separadas por comas">
+          <button id="saveMemory" class="primary">Guardar en memoria</button>
+        </article>
+        <article class="panel">
+          <div class="eyebrow">MEMORIA</div><h3>Lo que me has pedido recordar.</h3>
+          <div id="memoryList" class="stack"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-search" class="view hidden">
+      <article class="panel">
+        <div class="eyebrow">BÚSQUEDA GENERAL</div><h3>Busca en todo tu Cerebro.</h3>
+        <div class="searchbar"><input id="searchInput" placeholder="Ej. Adela, cartel naranja, presupuesto…"><button id="searchBtn">Buscar</button></div>
+        <div id="searchResults" class="stack"></div>
+      </article>
+    </section>
+
+    <section id="view-trash" class="view hidden">
+      <article class="panel">
+        <div class="eyebrow">PAPELERA</div><h3>Nada desaparece sin pasar por aquí.</h3>
+        <div id="trashList" class="stack"></div>
+      </article>
+    </section>
+
+    <section id="view-activity" class="view hidden">
+      <article class="panel">
+        <div class="eyebrow">ACTIVIDAD</div><h3>Lo que ha hecho Cerebro.</h3>
+        <div id="journalList" class="stack"></div>
+      </article>
+    </section>
+
+    <section id="view-settings" class="view hidden">
+      <div class="grid two">
+        <article class="panel">
+          <div class="eyebrow">IDENTIDAD</div><h3>Cómo quieres que sea.</h3>
+          <input id="setName" placeholder="Tu nombre">
+          <input id="setCall" placeholder="Cómo quieres que te llame">
+          <input id="setBrain" placeholder="Nombre del Cerebro">
+          <textarea id="setStyle" placeholder="Estilo de respuesta"></textarea>
+          <label class="toggle-row"><span><b>Voz</b><small>Permitir que el asistente responda hablando.</small></span><input id="setVoice" type="checkbox" checked></label>
+          <label class="toggle-row"><span><b>Reducir movimiento</b><small>Suaviza animaciones si prefieres una interfaz más tranquila.</small></span><input id="setMotion" type="checkbox"></label>
+          <button id="saveSettings" class="primary">Guardar cambios</button>
+        </article>
+        <article class="panel">
+          <div class="eyebrow">SEGURIDAD</div><h3>Tu acceso privado.</h3><div id="passwordReview" class="security-note hidden"><b>Revisa tu contraseña inicial</b><span>Ya has entrado con la clave de arranque. Puedes sustituirla ahora por una contraseña personal.</span></div>
+          <input id="newPassword" type="password" placeholder="Nueva contraseña">
+          <button id="changePassword">Actualizar contraseña</button>
+          <hr style="border:0;border-top:1px solid rgba(255,255,255,.08);margin:18px 0">
+          <div class="eyebrow">DIAGNÓSTICO</div>
+          <p class="muted">Si algo falla, exporta un diagnóstico. Contiene versión, módulos, estructura y actividad reciente, pero no incluye contraseñas.</p>
+          <button id="downloadDiagnostics">Descargar diagnóstico técnico</button>
+
+        </article>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="sheetBackdrop" class="sheet-backdrop hidden">
+  <div id="sheet" class="sheet" role="dialog" aria-modal="true">
+    <div class="sheet-handle"></div>
+    <div id="sheetBody"></div>
+  </div>
+</div>
+<div id="progressOverlay" class="progress-overlay hidden">
+  <div class="progress-card">
+    <div class="spinner"></div><b id="progressTitle">Trabajando…</b><span id="progressText">Cerebro está procesando la operación.</span>
+  </div>
+</div>
+<div id="contextMenu" class="context hidden"></div>
+<div id="toast" class="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>

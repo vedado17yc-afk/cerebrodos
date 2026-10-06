@@ -1,0 +1,81 @@
+{
+  "product": "CEREBRO",
+  "version": "5.0.0",
+  "purpose": "Creative professional storage, organization, memory and assistant system",
+  "entrypoint": "server.mjs",
+  "frontend": {
+    "html": "public/index.html",
+    "css": "public/styles.css",
+    "js": "public/app.js"
+  },
+  "persistent_directories": {
+    "storage": "User files and project folders",
+    "trash": "Reversible deleted files/folders",
+    "data": "Profile, memory, password settings, activity journal",
+    "docs": "Permanent project context and maintenance documentation"
+  },
+  "core_modules": [
+    "authentication",
+    "onboarding",
+    "animated_face",
+    "speech",
+    "file_browser",
+    "folder_creation",
+    "project_creation",
+    "upload",
+    "download",
+    "rename",
+    "move",
+    "trash_restore_delete",
+    "global_search",
+    "memory",
+    "professional_batch_rename",
+    "project_archive_zip",
+    "activity_journal",
+    "natural_commands"
+  ],
+  "critical_files": [
+    "server.mjs",
+    "public/index.html",
+    "public/styles.css",
+    "public/app.js",
+    "docs/CONTEXTO_MAESTRO.md",
+    "docs/ARCHITECTURE.json",
+    "docs/CHANGELOG.md"
+  ],
+  "safety_rules": [
+    "Do not operate outside storage/",
+    "Do not follow symlinks",
+    "Preview destructive bulk changes",
+    "Trash before permanent delete",
+    "Keep manifests for project and rename operations",
+    "Use CSRF for mutations",
+    "Password hash with bcrypt",
+    "Journal important actions"
+  ],
+  "identity": {
+    "assistant_name": "user-defined",
+    "personality": "user-defined",
+    "response_style": "user-defined",
+    "voice_enabled": "user preference",
+    "reduce_motion": "user preference"
+  },
+  "password_storage": "scrypt salt + hash; no plaintext",
+  "cloud": {
+    "provider": "Google Drive",
+    "scope": "https://www.googleapis.com/auth/drive.file",
+    "root_folder": "CEREBRO",
+    "oauth": "server-side OAuth 2.0 offline",
+    "token_storage": "AES-256-GCM encrypted in data/google-drive.tokens.enc",
+    "operations": [
+      "list",
+      "create folder",
+      "upload",
+      "search app-visible files",
+      "rename",
+      "move",
+      "download",
+      "trash"
+    ]
+  }
+}
